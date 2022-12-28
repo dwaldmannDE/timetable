@@ -1,0 +1,83 @@
+<section class="hero">
+    <div class="hero-body">
+        <h1 class="title is-1">
+         {{ lineName }}
+        </h1>
+    </div>
+</section>
+<section class="section">
+    <div *ngIf="trip; else notFound">
+        <div class="card mb-4" *ngFor="let stop of trip.stopovers ; let i = index">
+            <div class="card-content">
+                <div class="media">
+                    <div class="media-left">
+                        <p class="title"> #{{ i + 1 }} </p>
+                    </div>
+                    <div class="media-content">
+                        <p class="title is-4"> {{stop.stop.name}}
+                            <span class="tag is-danger" *ngIf="stop.arrivalDelay >= 5"> Verspätung: {{ stop.arrivalDelay }} Minuten</span>
+                            <span class="tag is-success" *ngIf="stop.arrivalDelay < 5 && stop.arrivalDelay != null"> Pünktlich</span>
+                            <span class="tag is-warning" *ngIf="stop.arrivalDelay == null"> fehlende Daten </span>
+                        </p>
+                        <p class="subtitle is-6" *ngIf="stop.arrivalPlatform">Gleis {{ stop.arrivalPlatform }} </p>
+                        <p class="subtitle is-6" *ngIf="stop.departurePlatform && !stop.arrivalPlatform">Gleis {{ stop.departurePlatform }} </p>
+                        <p class="subtitle is-6" *ngIf="stop.plannedArrivalPlatform && !stop.arrivalPlatform">Gleis {{ stop.plannedArrivalPlatform }} </p>
+                        <p class="subtitle is-6" *ngIf="stop.plannedDeparturePlatform && !stop.departurePlatform && !stop.plannedArrivalPlatform">Gleis {{ stop.DepartureArrivalPlatform }} </p>
+                    </div>
+                </div>
+                <div class="content">
+                    <table>
+                        <tr *ngIf="stop.arrival">
+                            <td>
+                                Ankunft:
+                            </td>
+                            <td> 
+                                {{ stop.arrival | date:'HH:mm' }}
+                            </td>
+                        </tr>
+                        <tr *ngIf="stop.plannedArrival && !stop.arrival">
+                            <td>
+                                Ankunft:
+                            </td>
+                            <td> 
+                                {{ stop.plannedArrival | date:'HH:mm' }}
+                            </td>
+                        </tr>
+                        <tr *ngIf="stop.departure">
+                            <td>
+                                Abfahrt:
+                            </td>
+                            <td> 
+                                {{ stop.departure | date:'HH:mm' }}
+                            </td>
+                        </tr>
+                        <tr *ngIf="stop.plannedDeparture && !stop.departure">
+                            <td>
+                                Abfahrt:
+                            </td>
+                            <td> 
+                                {{ stop.plannedDeparture | date:'HH:mm' }}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="content">
+                    <ul>
+                        <li *ngFor="let remark of stop.remarks">
+                            {{ remark.text }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <footer class="card-footer">
+                <a href="/departure/{{ stop.stop.id }}" class="card-footer-item">Abfahrten</a>
+                <a href="/arrival/{{ stop.stop.id }}" class="card-footer-item">Ankünfte</a>
+            </footer>
+        </div>
+    </div>
+    <ng-template #notFound>
+        <div class="notification is-info">
+            Nichts gefunden. Bitte ändere die Suchparameter.
+        </div>
+    </ng-template>
+</section>
