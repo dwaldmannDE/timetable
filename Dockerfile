@@ -35,4 +35,5 @@ COPY --from=build-stage /app/dist/angular-trains/ /usr/local/apache2/htdocs/
 COPY .htaccess /usr/local/apache2/htdocs/
 
 # Add LoadModule rewrite_module modules/mod_rewrite.so to httpd.conf
-RUN echo "LoadModule rewrite_module modules/mod_rewrite.so" >> /usr/local/apache2/conf/httpd.conf
+RUN sed -i '/LoadModule rewrite_module/s/^#//g' /usr/local/apache2/conf/httpd.conf && \
+    sed -i 's#AllowOverride [Nn]one#AllowOverride All#' /usr/local/apache2/conf/httpd.conf
