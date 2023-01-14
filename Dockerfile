@@ -30,3 +30,6 @@ FROM httpd:alpine
 
 # Copy the build artifacts from the previous stage
 COPY --from=build-stage /app/dist/angular-trains/ /usr/local/apache2/htdocs/
+
+# Copy the .htaccess file
+COPY .htaccess /usr/local/apache2/htdocs/
