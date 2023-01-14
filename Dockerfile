@@ -36,9 +36,4 @@ COPY .htaccess /usr/local/apache2/htdocs/
 
 # Enable the rewrite module
 RUN sed -i '/LoadModule rewrite_module/s/^#//g' /usr/local/apache2/conf/httpd.conf
-
-# Enable the .htaccess file
-RUN { \
-  echo 'IncludeOptional conf.d/*.conf'; \
-} >> /usr/local/apache2/conf/httpd.conf \
-  && mkdir /usr/local/apache2/conf.d
+RUN a2enmod rewrite
