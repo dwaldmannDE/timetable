@@ -29,4 +29,10 @@ RUN ng build
 FROM nginx:stable-alpine
 
 # Copy the build artifacts from the previous stage
-COPY --from=build-stage /app/dist/ /usr/share/nginx/html
+COPY --from=build-stage /app/dist/angular-trains/ /usr/share/nginx/html
+
+# Export port 80
+EXPOSE 80
+
+# Execute the nginx server
+CMD ["nginx", "-g", "'daemon off;'"]
