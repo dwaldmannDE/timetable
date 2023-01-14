@@ -33,3 +33,12 @@ COPY --from=build-stage /app/dist/angular-trains/ /usr/local/apache2/htdocs/
 
 # Copy the .htaccess file
 COPY .htaccess /usr/local/apache2/htdocs/
+
+# Enable the rewrite module
+RUN sed -i '/LoadModule rewrite_module/s/^#//g' /usr/local/apache2/conf/httpd.conf
+
+# Enable the .htaccess file
+RUN { \
+  echo 'IncludeOptional conf.d/*.conf'; \
+} >> /usr/local/apache2/conf/httpd.conf \
+  && mkdir /usr/local/apache2/conf.d
