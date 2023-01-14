@@ -20,7 +20,7 @@ RUN npm run build
 RUN git rev-parse --short HEAD > gitversion.txt
 
 # Replace {{version}} with git commit hash
-RUN sed -i 's/{{version}}/$(cat gitversion.txt)/g' /app/dist/index.html
+RUN sed -i 's/{{version}}/$(cat gitversion.txt)/g' /dist/index.html
 
 # Stage 2: Serve the app using nginx
 FROM nginx:stable-alpine
