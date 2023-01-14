@@ -34,6 +34,5 @@ COPY --from=build-stage /app/dist/angular-trains/ /usr/local/apache2/htdocs/
 # Copy the .htaccess file
 COPY .htaccess /usr/local/apache2/htdocs/
 
-# Enable the rewrite module
-RUN sed -i '/LoadModule rewrite_module/s/^#//g' /usr/local/apache2/conf/httpd.conf
-RUN a2enmod rewrite
+# Add LoadModule rewrite_module modules/mod_rewrite.so to httpd.conf
+RUN echo "LoadModule rewrite_module modules/mod_rewrite.so" >> /usr/local/apache2/conf/httpd.conf
