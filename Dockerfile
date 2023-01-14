@@ -13,14 +13,14 @@ RUN npm install
 # Copy the rest of the files
 COPY . .
 
-# Build the app
-RUN npm run build
-
 # Get the git commit hash
 RUN git rev-parse --short HEAD > gitversion.txt
 
 # Replace {{version}} with git commit hash
-RUN sed -i 's/{{version}}/$(cat gitversion.txt)/g' /dist/index.html
+RUN sed -i 's/{{version}}/$(cat gitversion.txt)/g' /src/index.html
+
+# Build the app
+RUN npm run build
 
 # Stage 2: Serve the app using nginx
 FROM nginx:stable-alpine
