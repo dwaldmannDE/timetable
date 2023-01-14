@@ -19,8 +19,11 @@ RUN git rev-parse --short HEAD > gitversion.txt
 # Replace {{version}} with git commit hash
 RUN sed -i 's/{{version}}/$(cat gitversion.txt)/g' /app/src/index.html
 
+# Install the angular cli
+RUN npm install -g @angular/cli
+
 # Build the app
-RUN npm run build
+RUN ng build --prod
 
 # Stage 2: Serve the app using nginx
 FROM nginx:stable-alpine
