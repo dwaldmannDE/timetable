@@ -30,9 +30,3 @@ FROM nginx:stable-alpine
 
 # Copy the build artifacts from the previous stage
 COPY --from=build-stage /app/dist/ /usr/share/nginx/html
-
-# Copy the nginx configuration file
-EXPOSE 80
-
-# Run nginx
-CMD ["nginx", "-g", "daemon off;"]
