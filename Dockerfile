@@ -17,7 +17,7 @@ COPY . .
 RUN git rev-parse --short HEAD > gitversion.txt
 
 # Replace {{version}} with git commit hash
-RUN sed -i 's/{{version}}/$(cat gitversion.txt)/g' /src/index.html
+RUN sed -i 's/{{version}}/$(cat gitversion.txt)/g' /app/src/index.html
 
 # Build the app
 RUN npm run build
