@@ -26,13 +26,7 @@ RUN npm install -g @angular/cli
 RUN ng build
 
 # Stage 2: Serve the app using nginx
-FROM nginx:stable-alpine
+FROM httpd:alpine
 
 # Copy the build artifacts from the previous stage
-COPY --from=build-stage /app/dist/angular-trains/ /usr/share/nginx/html
-
-# Export port 80
-EXPOSE 80
-
-# Execute the nginx server
-CMD ["nginx", "-g", "'daemon off;'"]
+COPY --from=build-stage /app/dist/angular-trains/ /usr/local/apache2/htdocs/
