@@ -23,7 +23,7 @@ RUN sed -i 's/{{version}}/$(cat gitversion.txt)/g' /app/src/index.html
 RUN npm install -g @angular/cli
 
 # Build the app
-RUN ng build --prod
+RUN ng build
 
 # Stage 2: Serve the app using nginx
 FROM nginx:stable-alpine
